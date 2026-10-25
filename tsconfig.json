@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ESnext",
+    "module": "CommonJS",
+    "outDir": "dist", //optionally use “” to not use an output folder
+    "sourceMap": true
+  },
+  "include": ["src/**/*"]
+}
+//npm i -D typescript @types/node ts-node
+//node ./dist/index.js

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Gender Predictor</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/brain.js"></script>
+  </head>
+
+  <body>
+    <div class="pre-trained-container">
+      <h1>Gender Predictor</h1>
+      <h3>Description:</h3>
+      <a href="desc.html">Go to site Description</a>
+      <p>
+        Training data source: 
+        https://bcsiriuschen.github.io/CARC/t
+      </p>
+      <div class="button-container">
+        <input type="file" id="imageUploadInput" accept="image/*" />
+        <button onclick="HTMLHandler.displayImage();">
+          Upload Image
+        </button>
+        <br />
+      </div>
+
+      <div class="image-container">
+        <img id="imgDisplay"></img>
+      </div>
+      <div class="button-container">
+        <button onclick="HTMLHandler.predictGender()">Run Neural Network</button>
+      </div>
+    </div>
+
+    <div class="display-container">
+      <h2>What the AI sees:</h2>
+      <div class="canvas-container">
+        <canvas hidden id="trainingCanvas"></canvas>
+        <canvas id="displayCanvas"></canvas>
+      </div>
+      <h1>Prediction:</h1>
+      <h1 id="results"></h1>
+    </div>
+
+    <div class="training-container">
+      <h1>Training</h1>
+      <h3>Description:</h3>
+      <a href="desc.html">Go to site Description</a>
+      <div class="button-container">
+        <p></p>
+        <input type="file" id="imageUploadTrainingM" accept="image/*" />
+        <button onclick="HTMLHandler.addToTrainingM();">Upload training M</button>
+        <input type="file" id="imageUploadTrainingF" accept="image/*" />
+        <button onclick="HTMLHandler.addToTrainingF();">Upload Training F</button>
+        <input type="file" id="imageUploadInputUser" accept="image/*" />
+        <button onclick="HTMLHandler.displayImageUser();">Upload to run</button>
+        <p></p>
+        <div class="image-container">
+          <img id="imgDisplayUser"></img>
+        </div>
+        <br />
+        <button onclick="HTMLHandler.predictGenderUser()">Run Neural Network</button>
+        <br />
+        <button onclick="SYSTEM.startTraining();">Start Training</button>
+        <p>
+        While training, the site will freeze (including training status). Open the console to see the live logs of the training.
+      </p>
+      </div>
+
+      <div
+        class="training-status-container"
+        onclick="HTMLHandler.toggleTrainingStatus()"
+      >
+        <p id="trainingStatus" class="collapsed">
+          Click to Expand <br />
+          Training status will appear here:
+        </p>
+      </div>
+    </div>
+
+    <script defer src="./dist/data.js"></script>
+    <script defer src="./dist/html.js"></script>
+    <script defer src="./dist/image_processor.js"></script>
+    <script defer src="./dist/neural_network.js"></script>
+    <script defer src="./dist/system.js"></script>
+    <script>
+      // Function to handle training image upload
+      function uploadTrainingImage() {
+        const trainingImageInput =
+          document.getElementById("trainingImageInput");
+        const trainingCanvas = document.getElementById("trainingCanvas");
+
+        const file = trainingImageInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            // Set the source of the training canvas to the uploaded file
+            trainingCanvas.src = e.target.result;
+
+            // Additional logic for handling training image upload can be added here
+            // For example, you might want to display the image on the canvas or process it further
+          };
+
+          // Read the uploaded file as a data URL
+          reader.readAsDataURL(file);
+        } else {
+          alert("Please select an image file.");
+        }
+      }
+    </script>
+  </body>
+</html>

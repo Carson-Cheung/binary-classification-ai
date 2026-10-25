@@ -1,0 +1,10 @@
+node_modules/
+.cache/
+.config/
+.lesson/
+.upm/
+.replit
+replit.nix
+.breakpoints
+replit_zip_error_log.txt
+dist/*.map
