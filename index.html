@@ -2,23 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Gender Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary Image Classification Studio | Interactive Neural Network</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/brain.js"></script>
   </head>
 
   <body>
     <div class="pre-trained-container">
-      <h1>Gender Predictor</h1>
+      <h1 style="font-size: 32px;">Male vs Female Classifier</h1>
       <h3>Description:</h3>
       <a href="desc.html">Go to site Description</a>
-      <p>
-        Training data source: 
-        https://bcsiriuschen.github.io/CARC/t
+      <p style="margin-top: 15px;">
+        Pre-trained to classify male vs female faces using the CARC face dataset.<br /><br />
+        Training data source:<br />
+        <a href="https://bcsiriuschen.github.io/CARC/t" target="_blank" rel="noopener noreferrer">https://bcsiriuschen.github.io/CARC/t</a>
       </p>
       <div class="button-container">
-        <input type="file" id="imageUploadInput" accept="image/*" />
+        <input type="file" id="imageUploadInput" accept="image/*" onchange="HTMLHandler.displayImage();" />
         <button onclick="HTMLHandler.displayImage();">
           Upload Image
         </button>
@@ -26,7 +27,7 @@
       </div>
 
       <div class="image-container">
-        <img id="imgDisplay"></img>
+        <img id="imgDisplay" alt="" />
       </div>
       <div class="button-container">
         <button onclick="HTMLHandler.predictGender()">Run Neural Network</button>
@@ -47,25 +48,49 @@
       <h1>Training</h1>
       <h3>Description:</h3>
       <a href="desc.html">Go to site Description</a>
+
+      <p style="margin-top: 15px;">
+        Tip: Try categorizing dark colours (Class A) vs light colours (Class B)!<br />
+        <a href="./sample_dataset_dark_vs_light.zip" download style="color: #3498db;">Download Sample Colour Dataset (.zip)</a>
+      </p>
+
       <div class="button-container">
-        <p></p>
-        <input type="file" id="imageUploadTrainingM" accept="image/*" />
-        <button onclick="HTMLHandler.addToTrainingM();">Upload training M</button>
-        <input type="file" id="imageUploadTrainingF" accept="image/*" />
-        <button onclick="HTMLHandler.addToTrainingF();">Upload Training F</button>
-        <input type="file" id="imageUploadInputUser" accept="image/*" />
+        <button type="button" onclick="HTMLHandler.autoLoadColorSwatches();" style="margin-bottom: 8px;">Auto-Load Sample Dataset</button>
+
+        <label>Upload Class A (Dark): <span id="countBadgeA" style="color: #5dade2;">0 samples</span></label>
+        <input type="file" id="imageUploadTrainingA" accept="image/*" multiple onchange="HTMLHandler.handleInputFiles(this, 'A');" />
+        <button onclick="HTMLHandler.addToTrainingA();">Upload training A</button>
+        <br />
+
+        <label>Upload Class B (Light): <span id="countBadgeB" style="color: #5dade2;">0 samples</span></label>
+        <input type="file" id="imageUploadTrainingB" accept="image/*" multiple onchange="HTMLHandler.handleInputFiles(this, 'B');" />
+        <button onclick="HTMLHandler.addToTrainingB();">Upload Training B</button>
+        <br />
+
+        <label>Test Custom Model:</label>
+        <input type="file" id="imageUploadInputUser" accept="image/*" onchange="HTMLHandler.displayImageUser();" />
         <button onclick="HTMLHandler.displayImageUser();">Upload to run</button>
-        <p></p>
+
+        <div style="display: flex; gap: 8px; margin: 4px 0 8px 0;">
+          <button type="button" onclick="HTMLHandler.loadQuickTestSwatch('dark')" style="flex: 1; font-size: 13px; padding: 6px;">Test Dark</button>
+          <button type="button" onclick="HTMLHandler.loadQuickTestSwatch('light')" style="flex: 1; font-size: 13px; padding: 6px;">Test Light</button>
+        </div>
+
         <div class="image-container">
-          <img id="imgDisplayUser"></img>
+          <img id="imgDisplayUser" alt="" />
         </div>
         <br />
-        <button onclick="HTMLHandler.predictGenderUser()">Run Neural Network</button>
+
+        <button id="runUserNetworkBtn" onclick="HTMLHandler.predictGenderUser()">Run Neural Network</button>
         <br />
-        <button onclick="SYSTEM.startTraining();">Start Training</button>
+        <button id="startTrainingBtn" onclick="SYSTEM.startTraining();">Start Training</button>
+        <br />
+        <button id="checkAccuracyBtn" type="button" onclick="SYSTEM.checkAccuracy();" style="margin-top: 8px; background-color: #27ae60;">Check Accuracy</button>
+        <br />
+        <button id="downloadModelBtn" type="button" onclick="SYSTEM.downloadModel();" style="margin-top: 8px; background-color: #8e44ad;">Download Model (.json)</button>
         <p>
-        While training, the site will freeze (including training status). Open the console to see the live logs of the training.
-      </p>
+          While training, the site may freeze (including training status). Open the console to see the live logs of the training.
+        </p>
       </div>
 
       <div
@@ -84,31 +109,5 @@
     <script defer src="./dist/image_processor.js"></script>
     <script defer src="./dist/neural_network.js"></script>
     <script defer src="./dist/system.js"></script>
-    <script>
-      // Function to handle training image upload
-      function uploadTrainingImage() {
-        const trainingImageInput =
-          document.getElementById("trainingImageInput");
-        const trainingCanvas = document.getElementById("trainingCanvas");
-
-        const file = trainingImageInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-
-          reader.onload = function (e) {
-            // Set the source of the training canvas to the uploaded file
-            trainingCanvas.src = e.target.result;
-
-            // Additional logic for handling training image upload can be added here
-            // For example, you might want to display the image on the canvas or process it further
-          };
-
-          // Read the uploaded file as a data URL
-          reader.readAsDataURL(file);
-        } else {
-          alert("Please select an image file.");
-        }
-      }
-    </script>
   </body>
 </html>

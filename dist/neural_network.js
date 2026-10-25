@@ -1,36 +1,55 @@
 class NeuralNetwork {
     static config = {
         binaryThresh: 0.5,
-        hiddenLayers: [512, 256, 128],
+        hiddenLayers: [64, 32],
         activation: "sigmoid",
-        iterations: 20000,
-        learningRate: 0.01,
-        errorThresh: 0.05, //cahnge to 0.05
+        iterations: 800,
+        learningRate: 0.1,
+        errorThresh: 0.03,
     };
-    static crossValidateConfig = {
-        iterations: 20000,
-        log: (details) => {
-            console.log(details);
-            console.log(details.fold);
-            HTMLHandler.updateTrainingStatus(`Fold ${details.fold + 1}, Iteration ${details.iterations}, Error: ${details.error}`);
-        },
-    };
-    folds = 40;
     net;
     constructor() {
-        // Create a cross-validation instance with the specified number of folds
-        this.net = new brain.CrossValidate(() => new brain.NeuralNetwork(NeuralNetwork.config));
+        this.net = new brain.NeuralNetwork(NeuralNetwork.config);
+    }
+    fromJSON(json) {
+        this.net = new brain.NeuralNetwork();
+        this.net.fromJSON(json);
+    }
+    toJSON() {
+        return this.net.toJSON();
     }
     async train(data) {
-        // Train the cross-validated neural network
-        //await this.net.train(data, 5);
-        await this.net.train(data, NeuralNetwork.crossValidateConfig, this.folds);
-        this.net = await this.net.toNeuralNetwork();
+        HTMLHandler.updateTrainingStatus("Starting training loop...");
+        console.log(`Starting training on ${data.length} samples...`);
+        const options = {
+            iterations: NeuralNetwork.config.iterations,
+            errorThresh: NeuralNetwork.config.errorThresh,
+            learningRate: NeuralNetwork.config.learningRate,
+            log: (details) => {
+                console.log("Training status:", details);
+                const msg = typeof details === "string"
+                    ? details
+                    : `Iteration ${details.iterations}, Error: ${details.error?.toFixed ? details.error.toFixed(5) : details.error}`;
+                HTMLHandler.updateTrainingStatus(msg);
+            },
+            logPeriod: 2,
+        };
+        let res;
+        if (typeof this.net.trainAsync === "function") {
+            res = await this.net.trainAsync(data, options);
+        }
+        else {
+            res = this.net.train(data, options);
+        }
+        console.log("Training complete!", res);
+        HTMLHandler.updateTrainingStatus(`✓ Training complete! Final error: ${res.error?.toFixed ? res.error.toFixed(4) : res.error}`);
+        return res;
     }
     async run(input) {
-        // Use the run method on the cross-validated neural network
-        const output = await this.net.run(input);
-        return output;
+        if (!this.net) {
+            return [0.5];
+        }
+        return this.net.run(input);
     }
 }
 //# sourceMappingURL=neural_network.js.map

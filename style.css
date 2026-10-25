@@ -4,26 +4,74 @@ body {
   color: #fff;
   margin: 0;
   padding: 20px;
+  min-height: 100vh;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.training-container {
-  width: 20%;
-  max-width: 500px;
-  margin: 0 auto;
+.pre-trained-container {
+  width: 28%;
+  min-width: 280px;
+  max-width: 440px;
+  margin: 0 12px;
   background-color: #2c3e50;
   padding: 20px;
   border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.pre-trained-container h1 {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.display-container {
+  flex: 1;
+  min-width: 280px;
+  max-width: 460px;
+  margin: 0 12px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.display-container h1,
+.display-container h2 {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  font-size: 38px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.training-container {
+  width: 28%;
+  min-width: 280px;
+  max-width: 480px;
+  margin: 0 12px;
+  background-color: #2c3e50;
+  padding: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .training-container h1 {
   display: flex;
   justify-content: center;
   color: #fff;
-  font-size: 50px;
+  font-size: 40px;
+  margin-top: 5px;
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .image-container,
@@ -42,10 +90,16 @@ button {
   border: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  margin: 4px 0;
 }
 
 button:hover {
   background-color: #2980b9;
+}
+
+button:disabled {
+  background-color: #7f8c8d;
+  cursor: not-allowed;
 }
 
 .canvas-container {
@@ -58,9 +112,11 @@ button:hover {
 canvas,
 #displayCanvas {
   border: 2px solid #3498db;
-  flex: 1;
+  max-width: 100%;
+  height: auto;
   margin-top: 20px;
   border-radius: 5px;
+  background-color: #1a1c22;
 }
 
 .training-status-container {
@@ -69,59 +125,77 @@ canvas,
   background-color: #34495e;
   padding: 10px;
   border-radius: 5px;
+  margin-top: 15px;
 }
 
 #trainingStatus {
-  font-size: 16px;
+  font-size: 14px;
   margin-top: 10px;
   max-height: 100px;
-  overflow: hidden;
+  overflow-y: auto;
   transition: max-height 0.3s ease-out;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 #trainingStatus.expanded {
-  max-height: none;
+  max-height: 350px;
 }
 
-.image-display-container {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.image-display-container img {
+.image-container img,
+#imgDisplay,
+#imgDisplayUser {
   max-width: 100%;
+  max-height: 200px;
   border-radius: 5px;
-  margin: 10px;
+  margin: 10px auto;
+  object-fit: contain;
 }
 
-.pre-trained-container {
-  width: 20%;
-  margin: 0 auto;
-  background-color: #2c3e50;
-  padding: 20px;
-  border-radius: 10px;
+img:not([src]),
+img[src=""] {
+  display: none;
 }
 
-.pre-trained-container h1 {
-  display: flex;
-  justify-content: center;
-  color: #fff;
-  font-size: 50px;
-  margin-bottom: 15px;
+#results {
+  font-size: 24px;
+  min-height: 40px;
+  margin-top: 10px;
+  word-break: break-word;
 }
 
-.display-container h1,
-.display-container h2 {
-  display: flex;
-  justify-content: center;
-  color: #fff;
-  font-size: 50px;
-  margin-bottom: 5px;
+a {
+  color: #3498db;
+  text-decoration: underline;
 }
 
-.button-container button {
-  flex: 0.5; /* Set button width to half */
-  margin-right: 10px;
+a:hover {
+  color: #5dade2;
+}
+
+input[type="file"] {
+  margin: 6px 0;
+  color: #ddd;
+  font-size: 13px;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 8px;
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+  }
+  .pre-trained-container,
+  .display-container,
+  .training-container {
+    width: 95%;
+    max-width: 480px;
+    margin: 15px auto;
+  }
 }

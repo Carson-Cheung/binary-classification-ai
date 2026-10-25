@@ -2,30 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Gender Predictor | Description</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary Image Classification Studio | Description</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
-    <div class="display-container">
-      <h1>Description of Gender Predictor:</h1>
-      <p>
-        This section of the website uses a pre-trained model to determine if the
-        person in the image is a male or female. Data:
-        https://bcsiriuschen.github.io/CARC/t
+    <div class="display-container" style="max-width: 680px; margin: 40px auto; text-align: left;">
+      <p><a href="index.html">&larr; Return to Classifier</a></p>
+      <br />
+      <h1 style="justify-content: flex-start; font-size: 32px;">Description of Male vs Female Classifier:</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
+        This section of the website uses a pre-trained neural network model to classify a face image as Male or Female. It was pre-trained using the CARC face training dataset:
+        <br />
+        <a href="https://bcsiriuschen.github.io/CARC/t" target="_blank" rel="noopener noreferrer">https://bcsiriuschen.github.io/CARC/t</a>
       </p>
       <br />
-      <h1>Description of Training:</h1>
-      <p>
+      <h1 style="justify-content: flex-start; font-size: 32px;">Description of Training (Class A &amp; Class B):</h1>
+      <p style="font-size: 16px; line-height: 1.6;">
         This section of the website is a 'train your own AI' type of thing. I
         wanted to show the AI's process of training, but realized that training
         it would take a long time, meaning I can't train the model on the spot
         for the user to see. So, I created this section of the website that lets
-        the user upload some images to train an AI using the REPL. Obviously,
-        the user probably won't be able to train a really good AI, but this is
+        the user upload images to train a custom binary classifier (Class A and Class B) right in the browser. Obviously,
+        the user probably won't be able to train a really good AI with just a few pictures, but this is
         the best way I could think of to show how the AI works.
       </p>
+      <br />
+      <p><a href="index.html">&larr; Return to Classifier</a></p>
     </div>
   </body>
 </html>
