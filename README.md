@@ -11,11 +11,23 @@
 
 ## Overview
 
-This project is an in-browser computer vision studio built with **TypeScript**, **HTML5 Canvas**, and **Brain.js**. It enables real-time client-side image processing, tensor feature extraction, neural network training, and classification inference entirely in the user's browser—requiring no external backend, cloud APIs, or Python dependencies.
+This project is an in-browser computer vision studio built with **TypeScript**, **HTML5 Canvas**, and **Brain.js**. It enables real-time client-side image processing, tensor feature extraction, neural network training, and classification inference entirely in the user's browser, requiring no external backend, cloud APIs, or Python dependencies.
 
 The repository preserves the complete engineering journey across two milestones:
 1. **v1.0 (Original Grade 12 High School Build - 2024)**: The exploratory prototype exploring browser-based machine learning, which exposed real-world ML edge cases including catastrophic recency bias, tensor downsampling limitations, and synchronous browser freezing.
 2. **v2.0 (Upgraded Architecture)**: A production-refined architecture with $+125\%$ expanded tensor resolution ($48 \times 48$), Fisher-Yates dataset shuffling, non-blocking asynchronous training loops, holdout test validation ($83.5\%$ generalization accuracy), and exportable model weights.
+
+---
+
+## Versions
+
+| Version | Where to find it | What it is |
+| :--- | :--- | :--- |
+| **v1.0 - High school original (2024)** | tag `v1.0-highschool`, branch `v1-highschool-archive` | The original Grade 12 project. 32x32 input, trained in order (no shuffling). |
+| **v2.0 - Upgraded** | tag `v2.0`, branch `main` (root folder) | 48x48 input, shuffled training, holdout testing, 83.5% accuracy, `pretrained_model.json`. |
+| **Portfolio demo** | `portfolio-demo/` folder on `main`, tag `v2.1-portfolio-demo` | The version running on my portfolio site. v2 trimmed for the web: pinned brain.js version, no hardcoded local dataset, no Check Accuracy / Download Model buttons. |
+
+The full face dataset (about 900 images per class) is not included. Only 20 samples per class are in `TrainingData/`. The full set comes from the CARC dataset: https://bcsiriuschen.github.io/CARC/
 
 ---
 
@@ -58,7 +70,7 @@ The core value of this repository is the engineering post-mortem and iterative a
                  │
                  ▼
 [Classification Result & Confidence Gauge]
-  - Class A (0.00 – 0.49) vs. Class B (0.50 – 1.00)
+  - Class A (0.00 - 0.49) vs. Class B (0.50 - 1.00)
 ```
 
 ### Preprocessing & Normalization
@@ -94,6 +106,7 @@ binary-classification-ai/
 │   └── males/                    # Class 1 training images
 ├── sample_dataset/               # Quick lightweight test swatches (Dark vs. Light)
 ├── sample_dataset_dark_vs_light.zip # Downloadable test dataset bundle for browser use
+├── portfolio-demo/               # Web version used on the portfolio site (own src/ + built js/)
 ├── pretrained_model.json         # Carson's 83.5% accuracy trained weights
 ├── index.html                    # Main interactive studio interface (3-column layout)
 ├── style.css                     # Responsive CSS layout & dark aesthetic
